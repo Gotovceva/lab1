@@ -5,7 +5,7 @@ s = 10
 a = 0
 i = 1
 while i <= 7:
-    s = 10 × 1.1 ×× i
+    s = 10 * 1.1 ** i
     a = a + s
     i += 1
 print(a)
