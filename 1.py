@@ -5,6 +5,6 @@ x = 0
 for i in range(1,7):
     y = 1
     for q in range(1,i+1):
-        y = y × q
+        y = y * q
     x += y
 print(x)
