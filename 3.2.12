@@ -1,0 +1,17 @@
+#Лабараторная работа № 3
+#Уровень 2, задание 12
+#Первый отрицательный элемент массива заменить суммой элементов расположенных после максимального
+array = [1, 56, -11, 3, 4, 8]
+max_element = max(array)
+max_index = array.index(max_element)
+sum_after_max = sum(array[max_index + 1:])
+for i in range(len(array)):
+    if array[i] <0:
+        array[i] = sum_after_max
+        break
+print(array)
+exp_result = [1, 56, 4, 3, 4, 8]
+if array != exp_result:
+    print("Программа работает неверно")
+else:
+    print("Программа написана верно")
