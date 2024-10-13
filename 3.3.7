@@ -1,0 +1,17 @@
+#Лабараторная работа № 3
+#Уровень 3, задание 7
+#Все отрицательные элементы массива переставить в конец массива с сохранением порядка их следования
+array = [3, -2, 98, 0, -7, 45, -23]
+positive = []
+negative = []
+for number in array:
+    if number < 0:
+        negative.append(number)
+    else:
+        positive.append(number)
+print(positive + negative)
+exp_result = [3, 98, 0, 45, -2, -7, -23]
+if positive + negative != exp_result:
+    print("Программа работает неверно")
+else:
+    print("Программа написана верно")
