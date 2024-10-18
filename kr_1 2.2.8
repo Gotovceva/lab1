@@ -1,0 +1,15 @@
+# Контрольная работа № 1
+# Задание 8 из второго уровня ЛР № 2
+# В компьютер вводятся по очереди координаты n точек, лежащих на плоскости. Напечатать номер точки, близжайшей к началу координат, и величину расстояния от нее до начала координат
+import math
+n = int(input("Введите количество точек: "))
+c_p_index = -1
+closest_distance = float('inf')
+for i in range(n):
+    x = float(input("Введите координату x: "))
+    y = float(input("Введите координату y: "))
+    distance = math.sqrt(x ** 2 + y ** 2)
+    if distance < closest_distance:
+        closest_distance = distance
+        c_p_index = i + 1
+print(f"Ближайшая точка - точка {c_p_index} с расстоянием {closest_distance:.2f}")
