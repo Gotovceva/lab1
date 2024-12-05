@@ -1,0 +1,25 @@
+# Лабараторная работа № 4, 1 уровень задание 15
+# Преобразовать матрицу A размером 5*7, умножив максимальный элемент каждой строки на номер этой строки
+def transform_matrix(matrix):
+  rows = len(matrix)
+  transformed_matrix = []
+  for i, row in enumerate(matrix):
+    max_element = float('-inf')
+    for element in row:
+      if element > max_element:
+        max_element = element
+    new_row = [(element * (i + 1)) if element == max_element else element for element in row]
+    transformed_matrix.append(new_row)
+
+  return transformed_matrix
+matrix_a = [
+  [1, 2, 3, 4, 5, 6, 76],
+  [8, 9, 10, 11, 98, 13, 14],
+  [15, 16, 9, 18, 19, 20, 21],
+  [22, 23, 24, 29, 26, 27, 28],
+  [29, 30, 39, 32, 65, 34, 35]
+]
+transformed_matrix_a = transform_matrix(matrix_a)
+if transformed_matrix_a:
+  for row in transformed_matrix_a:
+    print(row)
