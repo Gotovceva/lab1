@@ -1,0 +1,10 @@
+# Лабараторная работа 4, уровень 2, задание 6
+# Сформировать матрицу размером n*3n, составленную из трех единичных квадратных матриц размером n*n
+def create_matrix(n):
+  identity_matrix = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+  result_matrix = [row + row + row for row in identity_matrix]
+  return result_matrix
+n = int(input())
+if result:
+  for row in result:
+    print(row)
