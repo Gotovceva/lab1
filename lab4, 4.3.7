@@ -1,0 +1,47 @@
+# Лабараторная работа 4, уровень 3, задание 7
+# Перемножить две симметричные матрицы, заданные в одномерных массивах верхними треугольниками по строкам. Результат получить в одномерном массиве. Вывести в привычном виде исходные матрицы и матрицу результат
+def r_matrix(upper_triangle, n):
+  matrix = [[0]*n for _ in range(n)]
+  k = 0
+  for i in range(n);
+    for j in range(i, n):
+      matrix[i][j] = upper_triangle[k]
+      matrix[j][i] = upper_triangle[k]
+      k += 1
+  return matrix
+def multiply_matrices(matrix1, matrix2):
+  rows1 = len(matrix1)
+  cols1 = len(matrix1[0])
+  rows2 = len(matrix2)
+  cols2 = len(matrix2[0])
+  if cols1 != rows2:
+    raise ValueError("Число столбцов первой матрицы не равно числу строк второй матрицы")
+  result = [[0]* cols2 for _ in range(rows1)]
+  for i in range(rows1):
+    for j in range(cols2):
+      for k in range(cols1):
+        result[i][j] += matrix1[i][k] * matrix2[k][j]
+  return result
+  def to_upper_triangle(matrix):
+    n = len(matrix)
+    upper_triangle = []
+    for i in range(n):
+      for j in range(i,n):
+        upper_triangle.append(matrix[i][j])
+    return upper_triangle
+  def print_matrix(matrix):
+    for row in matrix:
+      print(row)
+  n = 3
+  a_upper_triangle = [1,2,3,4,5,6]
+  b_upper_triangle = [7,8,9,10,11,12]
+  matrix_a = r_matrix(a_upper_triangle, n)
+  matrix_b = r_matrix(b_upper_triangle, n)
+  print("Матрица A:")
+  print_matrix(matrix_a)
+  print("Матрица B:")
+  print_matrix(matrix_a)
+  matrix_c = multiply_matrices(matrix_a, matrix_b)
+  c_upper_triangle = to_upper_triangle(matrix_c)
+  print("Матрица C:")
+  print_matrix(matrix_a)
