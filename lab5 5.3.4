@@ -1,0 +1,20 @@
+#Лабараторная работа № 5
+#Уровень 3, задание 4
+#Вычислить сумму квадратов элементов вектора полученного пересылкой в него либо верхнего либо нижнего треугольника заданной квадратной матрицы(в обоих случаях включая главную диагональ)
+def sum_squares(vector):
+    return sum(x**2 for x in vector)
+def copy_triangle(matrix, upper = True):
+    n = len(matrix)
+    vector = []
+    if upper:
+        for i in range(n):
+            for j in range(i, n):
+                vector.append(matrix[i][j])
+    return vector
+matrix = [[1,2,3], [4,5,6], [7,8,9]]
+upper_triangle = copy_triangle(matrix, upper = True)
+lower_triangle = copy_triangle(matrix, upper = False)
+sum_upper = sum_squares(upper_triangle)
+sum_lower = sum_squares(lower_triangle)
+print(f"Сумма квадратов верхнего треугольника: {sum_upper}")
+print(f"Сумма квадратов нижнего треугольника: {sum_lower}")
