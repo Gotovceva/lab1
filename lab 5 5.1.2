@@ -1,0 +1,31 @@
+#Лабараторная работа № 5
+# Уровень 1, задание 2
+# Два треугольника заданы длинами своих сторон a, b и c. Определить треугольник с большей площадью,вычисляя площади треугольников по формуле Герона
+import math
+def calculate_area(a, b, c):
+    if a + b <= c or a + c <= b or b + c <= a:
+        return "Треугольника с такими сторонами не существует"
+    p = (a + b + c)/2
+    area = math.sqrt(p * (p-a) * (p-b) * (p-c))
+    return area
+def compare(a1, b1, c1, a2, b2, c2):
+    area1 = calculate_area(a1, b1, c1)
+    area2 = calculate_area(a2, b2, c2)
+    if area1 > area2:
+        return "Первый треугольник имеет большую площадь"
+    elif area2 > area1:
+        return "Второй треугольник имеет большую площадь"
+    else:
+        return "Площади треугольников равны "     
+a1 = 5
+b1 = 6
+c1 = 7
+a2 = 3
+b2 = 4
+c2 = 5
+result = compare(a1, b1, c1, a2, b2, c2)
+print(result)
+if result == "Первый треугольник имеет большую площадь":
+    print("Программа работает верно")
+else:
+    print("Программа работает неверно")
