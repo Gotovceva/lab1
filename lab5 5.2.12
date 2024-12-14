@@ -1,0 +1,28 @@
+#Лабараторная работа № 5
+#Второй уровень, 12 задание
+#Заданы две матрицы   одинакового размера. Столбец первой матрицы, содержащий максимальный элемент поменять местами со столбцом второй матрицы, содержащим максимальный элемент. Поиск столбца, содержащего максимальный элемент матрицы оформитт в виде метода
+def find(matrix):
+    rows = len(matrix)
+    cols = len(matrix[0])
+    max_val = float('-inf')
+    max_col_index = -1
+    for col in range(cols):
+        for row in range(rows):
+            if matrix[row][col] > max_val:
+                max_col_index = col
+    return max_col_index
+def swap_columns(matrix1, matrix2):
+    col1 = find(matrix1)
+    col2 = find(matrix2)
+    for i in range(len(matrix1)):
+        matrix1[i][col1], matrix2[i][col2] = matrix2[i][col2], matrix1[i][col1]
+    return matrix1, matrix2
+matrix_a = [[1,5,3], [4,2,6], [7,8,9]]
+matrix_b = [[10,11,12], [13,4,15], [16,17,18]]
+matrix_a, matrix_b = swap_columns(matrix_a, matrix_b)
+print("Измененная матрица A:")
+for row in matrix_a:
+    print(row)
+print("Измененная матрица B:")
+for row in matrix_b:
+    print(row)
