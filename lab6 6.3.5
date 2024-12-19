@@ -1,0 +1,71 @@
+# Лабараторная работа № 6
+# Уровень 3, задание 5
+# Обрабатать результаты первенства по футболу. Результаты каждой игры заданы в виде названий команд и счета(количеств забитых и пропущенных мячей). Сформировать таблицу очков ( выигрыш -3, ничья -1, проигрыш - 0) и упорядочить результаты в соответствии с занятым местом. Если сумма очков у двух команд равна, то сравниваются разности забитых и пропущенных мячей. Вывести результатирующую таблицу, содержащую место, название команды, коооличество очков.
+class Team:
+    def __init__(self, name):
+        self.name = name
+        self.points = 0
+        self.goals_scored = 0
+        self.goals_conceded = 0
+    def __repr__(self):
+        return f"{self.name}: {self.points} очков ({self.goals_scored}-{self.goals_conceded})"
+class Match:
+    def __init__(self, team1, team2, score1, score2):
+        self.team1 = team1
+        self.team2 = team2
+        self.score1 = score1
+        self.score2 = score2
+def calculate_points(matches, teams):
+    for match in matches:
+        if match.score1 > match.score2:
+            match.team1.points += 3
+            match.team1.goals_scored += match.score1
+            match.team1.goals_conceded += match.score2
+            match.team2.goals_scored += match.score2
+            match.team2.goals_conceded += match.score1
+        elif match.score1 < match.score2:
+            match.team2.points += 3
+            match.team2.goals_scored += match.score2
+            match.team2.goals_conceded += match.score1
+            match.team1.goals_scored += match.score1
+            match.team1.goals_conceded += match.score2
+        else: 
+            match.team1.points += 1
+            match.team2.points += 1
+            match.team1.goals_scored += match.score1
+            match.team1.goals_conceded += match.score2
+            match.team2.goals_scored += match.score2
+            match.team2.goals_conceded += match.score1
+def bubble_sort_teams(teams):
+    n = len(teams)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if teams[j].points < teams[j + 1].points:
+                teams[j], teams[j + 1] = teams[j + 1], teams[j]
+            elif teams[j].points == teams[j + 1].points:
+                if (teams[j].goals_scored - teams[j].goals_conceded) < (teams[j + 1].goals_scored - teams[j + 1].goals_conceded):
+                    teams[j], teams[j + 1] = teams[j + 1], teams[j]
+def generate_league_table(teams):
+    bubble_sort_teams(teams)
+    print("{:<10} {:<20} {:<10}".format("Место", "Команда", "Очки"))
+    for i, team in enumerate(teams):
+        print("{:<10} {:<20} {:<10}".format(i + 1, team.name, team.points))
+teams_data = {"Зенит", "Спартак", "ЦСКА", "Локомотив", "Динамо"}
+matches_data = [
+    ("Зенит", "Спартак", 2, 1),
+    ("ЦСКА", "Локомотив", 3, 3),
+    ("Динамо", "Зенит", 1, 0),
+    ("Спартак", "Локомотив", 0, 2),
+    ("ЦСКА", "Динамо", 2, 1),
+    ("Зенит", "Локомотив", 1, 1),
+    ("Спартак", "Динамо", 2, 2),
+    ("ЦСКА", "Спартак", 1, 0),
+    ("Зенит", "ЦСКА", 0, 1),
+    ("Локомотив", "Динамо", 3, 0)
+]
+teams = {name: Team(name) for name in teams_data}
+matches = [Match(teams[t1], teams[t2], s1, s2) for t1, t2, s1, s2 in matches_data]
+calculate_points(matches, teams)
+generate_league_table(list(teams.values()))
+
+
