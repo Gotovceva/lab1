@@ -1,0 +1,46 @@
+# Лабараторная работа № 6
+# Уровень 2, задание 8
+# Для формирования сборной по хоккею предварительно отобраны 30 человек. На основании протоколов игр составлена таблица, в которой содержатся штрафное время каждого игрока по каждой игре(2, 5 или 10 минут) Написать программу, которая составляет список кандидатов в сборную в порядке возврастания суммарного штрафного времени. Игрок оштрафованный на 10 минут из списка кандидатов исключается
+class Player:
+    def __init__(self, name, penalties):
+        self.name = name
+        self.penalties = penalties
+        self.total_penalty = sum(penalties)
+    def __repr__(self):
+        return f"{self.name}: {self.total_penalty} минут"
+def generate_candidate_list(players, max_penalty=10):
+    candidates = [
+        player
+        for player in players
+        if player.total_penalty <= max_penalty and 10 not in player.penalties
+    ]
+    candidates.sort(key=lambda p: p.total_penalty)
+    return candidates
+def print_candidate_list(candidates):
+    if not candidates:
+        print("Кандидаты, удовлетворяющие критериям, отсутствуют.")
+        return
+    print("Список кандидатов:")
+    print("-" * 30)
+    print("{:<20} {:<15}".format("Имя", "Штрафное время (мин)"))
+    print("-" * 30)
+    for i, player in enumerate(candidates):
+        print("{:<20} {:<15}".format(player.name, player.total_penalty))
+    print("-" * 30)
+players_data = [
+    ("Иванов", [2, 2, 2]),
+    ("Петров", [5, 10, 2]),
+    ("Сидоров", [2, 2, 5]),
+    ("Смирнов", [10, 5]),
+    ("Кузнецов", [2, 2, 5]),
+    ("Васильев", [2, 2, 2, 2, 2, 2]),
+    ("Михайлов", [5, 10, 5]),
+]
+try:
+    players = [Player(name, penalties) for name, penalties in players_data]
+    candidate_list = generate_candidate_list(players)
+    print_candidate_list(candidate_list)
+except ValueError as e:
+    print(f"Ошибка в данных: {e}")
+
+
