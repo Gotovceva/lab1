@@ -1,0 +1,38 @@
+# Контрольная работа № 2
+# Лабараторная работа № 4
+# 1 уровень, 25 задание
+# В матрице размером 6*5 поменять местами строки, содержащие минимальное и максимальное число отрицательных элементов.
+def count_negative(row):
+    count = 0
+    for num in row:
+        if num < 0:
+            count += 1
+    return count
+def swap_rows(matrix, row1, row2):
+    matrix[row1],matrix[row2] = matrix[row2],matrix[row1]
+def process_matrix(matrix):
+    min_neg_count = float('inf')
+    max_neg_count = float('-inf')
+    min_row_index = -1
+    max_row_index = -1
+    for i, row in enumerate(matrix):
+        neg_count = count_negative(row)
+        if neg_count < min_neg_count:
+            min_neg_count = neg_count
+            min_row_index = i
+        if neg_count > max_neg_count:
+            max_neg_count = neg_count
+            max_row_index = i
+    if min_row_index != -1 and max_row_index != -1:
+        swap_rows(matrix, min_row_index, max_row_index)
+matrix = [
+    [1, -2, 3, -4, 5],
+    [-1, 2, -3, 4, -5],
+    [6, -7, 8, -9, 10],
+    [11, -12, 13, 14, 15],
+    [-1, -1, -2, -3, 4],
+    [1, 2, 3, 6, 5]
+    ]
+process_matrix(matrix)
+for row in matrix:
+    print(row)
