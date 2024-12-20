@@ -1,0 +1,7 @@
+import random
+from random import randint
+random.seed(3108)
+x = randint(1, 33)
+y = randint(1, 28)
+z = randint(1, 6)
+print(x, y, z)
