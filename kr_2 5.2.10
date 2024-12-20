@@ -1,0 +1,53 @@
+# Контрольная работа № 2
+# Лабараторная работа № 5
+# Уровень 2, задание 10
+# В заданной квадратной матрице найти максимальный элемент среди элементов расположенных ниже главной диагонали(включая диагональ), и минимальный элемент среди элементов, расположенных выше главной диагонали. Удалить столбцы, в которых они находятся
+class Matrix:
+    def __init__(self, matrix):
+        self.matrix = matrix
+        self.rows = len(matrix)
+        self.cols = len(matrix[0]) if self.rows > 0 else 0
+    def find_n_diag(self):
+        max_element = float('-inf')
+        for i in range(self.rows):
+            for j in range(i, self.cols):
+                if self.matrix[i][j] > max_element:
+                    max_element = self.matrix[i][j]
+        return max_element
+    def find_m_diag(self):
+        min_element = float('inf')
+        for i in range(self.rows):
+            for j in range(i + 1, self.cols):
+                if self.matrix[i][j] < min_element:
+                    min_element = self.matrix[i][j]
+        return min_element
+    def remove_column(self, col_index):
+        self.matrix = [row[:col_index] + row[col_index+1:] for row in self.matrix]
+        self.cols -= 1
+    def process_matrix(self):
+        max_below = self.find_n_diag()
+        min_above = self.find_m_diag()
+        max_col = -1
+        min_col = -1
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if i >= j and self.matrix[i][j] == max_below:
+                    max_col = j
+                if i < j and self.matrix[i][j] == min_above:
+                    min_col = j
+        if max_col != -1:
+            self.remove_column(max_col)
+        if min_col != -1:
+            self.remove_column(min_col)
+matrix_data = [
+    [1,2,3,4,5],
+    [6,7,8,9,10],
+    [11,12,13,14,15],
+    [16,17,18,19,20],
+    [21,22,23,24,25],
+    [26,27,28,29,30]
+    ]
+matrix = Matrix(matrix_data)
+matrix.process_matrix()
+for row in matrix.matrix:
+    print(row)
