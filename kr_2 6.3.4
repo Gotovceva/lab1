@@ -1,0 +1,38 @@
+# Контрольная работа № 2
+# Лабараторная работа № 6(7)
+# Уровень 3, задание 4
+# Лыжные гонки проводятся отдельно для двух групп участников. Результаты соревнований заданы в виде фамилий участников и их результатов в каждой группе. Расположить результаты соревнований в каждой группе по порядку занятых мест. Объединить результаты обеих групп с сохранением упорядоченности и вывести в виде таблицы с заголовком
+def process_race_results(group1_results, group2_results):
+    def sort_results(results):
+        return sorted(results, key=lambda item: item[1])
+    group1_ranked = sort_results(group1_results)
+    group2_ranked = sort_results(group2_results)
+    merged_results = []
+    i = j = 0
+    while i < len(group1_ranked) or j < len(group2_ranked):
+        if i < len(group1_ranked) and (j == len(group2_ranked) or group1_ranked[i][1] <= group2_ranked[j][1]):
+            merged_results.append(group1_ranked[i])
+            i += 1
+        else:
+            merged_results.append(group2_ranked[j])
+            j += 1
+    print("Результаты лыжных гонок:")
+    print("-" * 30)
+    print("{:<20} {:<10} {:<10}".format("Участник", "Группа", "Время"))
+    print("-" * 30)
+    for i, (name, time, group) in enumerate(merged_results):
+        print("{:<20} {:<10} {:<10}".format(name, group, time))
+    print("-" * 30)
+group1_results = [
+    ("Иванов", 15.5, "Группа 1"),
+    ("Петров", 14.2, "Группа 1"),
+    ("Сидоров", 16.1, "Группа 1"),
+]
+
+group2_results = [
+    ("Кузнецов", 13.8, "Группа 2"),
+    ("Смирнов", 14.9, "Группа 2"),
+    ("Васильев", 17.2, "Группа 2"),
+]
+
+process_race_results(group1_results, group2_results)
