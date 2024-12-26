@@ -17,6 +17,8 @@ def accuracy(x,y):
         if average < X[i]:
             count_X += 1
     acurasy1 = (count_X + count_O)/(len(O) + len(X))
+    count_O = 0
+    count_X = 0
     for i in range(len(O)):
         if average < O[i]:
             count_O += 1
