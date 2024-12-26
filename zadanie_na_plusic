@@ -1,0 +1,60 @@
+#Написать программу, которая анализирует два списка чисел (O и X), вычисляет, насколько хорошо среднее значение между парами чисел разделяет эти списки, находит пару с лучшим разделением, и проверяет, можно ли визуально разделить эти списки на прямой.
+O = [1, 2, 3, 8]
+X = [5, 6, 7]
+results = []
+if max(O) < min(X) or max(X) < min(O):
+    print('линейно разделимы')
+else:
+    print('линейно не разделимы')
+def accuracy(x,y):
+    average = (x+y)/2
+    count_O = 0
+    count_X = 0
+    for i in range(len(O)):
+        if average > O[i]:
+            count_O += 1
+    for i in range(len(X)):
+        if average < X[i]:
+            count_X += 1
+    acurasy1 = (count_X + count_O)/(len(O) + len(X))
+    for i in range(len(O)):
+        if average < O[i]:
+            count_O += 1
+    for i in range(len(X)):
+        if average > X[i]:
+            count_X += 1
+    acurasy2 = (count_X + count_O)/(len(O) + len(X))
+    if acurasy1 > acurasy2:
+        acurasy = acurasy1
+    elif acurasy2 > acurasy1:
+        acurasy = acurasy2
+    else:
+        acurasy = acurasy1
+    return acurasy, average
+minimum = 0
+maximum = 0
+obshiy_spisok = O + X
+obshiy_spisok.sort()
+results.append(accuracy(obshiy_spisok[0], obshiy_spisok[0] - 2))
+results.append(accuracy(obshiy_spisok[len(obshiy_spisok)-1], obshiy_spisok[len(obshiy_spisok)-1] + 2))
+def kakoy_massive(x):
+    if x in X:
+        return X
+    else:
+        return O
+for i in range(len(obshiy_spisok)-1):
+    if kakoy_massive(obshiy_spisok[i]) != kakoy_massive((obshiy_spisok[i+1])):
+        results.append(accuracy(obshiy_spisok[i],obshiy_spisok[i+1]))
+results_max = results[0][0]
+nubmer_results = 0
+for i in range(len(results)):
+    if results_max < results[i][0]:
+        results_max = results[i][0]
+for i in range(len(results)):
+    if results_max == results[i][0]:
+        number_results = results[i][1]
+print(results)
+print('------')
+print(results_max)
+print('-----')
+print(number_results)
