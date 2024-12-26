@@ -55,7 +55,7 @@ for i in range(len(results)):
 for i in range(len(results)):
     if results_max == results[i][0]:
         number_results = results[i][1]
-print(results)
+print(results)  #Список выводит пары значений, состоящих из точности разделения и точки, для которой точность проверялась
 print('------')
 print("Максимальное значение точности разделения:")
 print(results_max)
