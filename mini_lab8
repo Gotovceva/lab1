@@ -1,0 +1,15 @@
+#Назовем сложностью предложения сумму количества слов и знаков препинания. Определить сложность заданного предложения
+import string
+def calculate_sentence_complexity(sentence):
+    words = sentence.split()
+    word_count = len(words)
+    punctuation_count = 0
+    for char in sentence:
+        if char in string.punctuation:
+            punctuation_count += 1
+    complexity = word_count + punctuation_count
+    return complexity
+sentence = "Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку."
+complexity = calculate_sentence_complexity(sentence)
+print(f"Сложность предложения: {complexity}")
+
