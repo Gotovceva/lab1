@@ -1,0 +1,71 @@
+# Вариант по журналу-8, остаток от деления на 3- 2, следовательно вариант, который выбирается в работе- третий 
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider
+
+def generate_data(n=20, k=3):
+    np.random.seed(0)  
+    centers = [(2, 2), (8, 8), (2, 8)]  
+    radii = [1, 1, 1]  
+    x, y = [], []
+    for i in range(k):
+        theta = np.linspace(0, 2 * np.pi, n)
+        r = radii[i] + np.random.rand(n) * 0.5  
+        x.extend(centers[i][0] + r * np.cos(theta))
+        y.extend(centers[i][1] + r * np.sin(theta))
+    return np.array(x), np.array(y)
+
+def k_means(x, y, k=3, max_iters=100):
+    n = len(x)
+    indices = np.random.choice(n, k, replace=False)
+    centers = np.array(list(zip(x[indices], y[indices])))
+    labels = np.zeros(n)
+    previous_labels = np.zeros(n)
+    for _ in range(max_iters):
+        for i in range(n):
+            distances = np.linalg.norm(centers - np.array([x[i], y[i]]), axis=1)
+            labels[i] = np.argmin(distances)
+        if np.array_equal(labels, previous_labels):
+            break
+        new_centers = np.zeros((k, 2))
+        for i in range(k):
+            if np.any(labels == i):  
+                new_centers[i] = [np.mean(x[labels == i]), np.mean(y[labels == i])]
+            else:
+                new_centers[i] = centers[i]  
+        centers = new_centers
+        previous_labels = labels.copy()  
+    return labels
+
+def plot_clusters(x, y, labels, k):
+    plt.figure(figsize=(10, 6))
+    colors = ['r', 'g', 'b', 'c', 'm', 'y', 'k']
+    for i in range(k):
+        plt.scatter(x[labels == i], y[labels == i], color=colors[i], label=f'Cluster {i + 1}')
+    plt.title('K-Means Clustering')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+x, y = generate_data(n=20, k=3)
+labels = k_means(x, y, k=3)
+plot_clusters(x, y, labels, k=3)
+fig, ax = plt.subplots()
+plt.subplots_adjust(bottom=0.25)
+labels = k_means(x, y, k=3) 
+scatter = ax.scatter(x, y, c=labels)
+plt.colorbar(scatter)
+axcolor = 'lightgoldenrodyellow'
+ax_slider = plt.axes([0.2, 0.1, 0.65, 0.03], facecolor=axcolor)
+slider = Slider(ax_slider, 'Iterations', 1, 100, valinit=1, valstep=1)
+
+def update(val):
+    n_iters = int(slider.val)
+    labels = k_means(x, y, k=3)  
+    scatter.set_array(labels)
+    fig.canvas.draw_idle()
+
+slider.on_changed(update)
+plt.show()
